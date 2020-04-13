@@ -1,22 +1,34 @@
 FROM opensuse/leap:15.2
 
-RUN zypper install -y python3-pip
+RUN zypper -n install -y python3-pip \
+	wget
 
 RUN pip install --upgrade pip
 
-RUN pip install jupyterlab
-RUN pip install notebook
+# This could be downloaded locally and copied to the container via COPY
+RUN wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
 
-RUN pip install httplib2==0.12.0
-RUN pip install setuptools==41.0.0
-RUN pip install pandas==0.24
-RUN pip install tensorflow==2.1
-RUN pip install tfx==0.21.2
+# Install the newly downloaded CUDA-TOOLKIT
+RUN rpm -i /cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
+RUN zypper --gpg-auto-import-keys refresh
+RUN zypper -n install -y cuda
 
-# TensorBoard:
+# Install JupyterLab
+RUN pip install jupyterlab \
+	notebook
+
+# Install TFX and dependencies with resolved versioning
+RUN pip install httplib2==0.12.0 \
+	absl-py==0.8 \
+	setuptools==41.0.0 \
+	pandas==0.24 \
+	tensorflow==2.1 \
+	tfx==0.21.2
+
+# TensorBoard
 EXPOSE 6006 
 
-# JupiterLab:
+# JupiterLab
 EXPOSE 6007 
 
 # Put additional files into container
@@ -26,6 +38,6 @@ EXPOSE 6007
 ADD start.sh /
 RUN chmod +x /start.sh
 
-# This command will get executed on container start by default
+# Execute the two servers (TensorBoard and JupyterLab)
 ENTRYPOINT ["/start.sh"]
 
