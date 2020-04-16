@@ -1,17 +1,9 @@
-FROM opensuse/leap:15.2
+FROM opensuse/leap:15.2 AS base
 
 RUN zypper -n install -y python3-pip \
 	wget
 
 RUN pip install --upgrade pip
-
-# This could be downloaded locally and copied to the container via COPY
-RUN wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
-
-# Install the newly downloaded CUDA-TOOLKIT
-RUN rpm -i /cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
-RUN zypper --gpg-auto-import-keys refresh
-RUN zypper -n install -y cuda
 
 # Install JupyterLab
 RUN pip install jupyterlab \
@@ -37,6 +29,16 @@ EXPOSE 6007
 
 ADD start.sh /
 RUN chmod +x /start.sh
+
+FROM base AS gpu
+
+# This could be downloaded locally and copied to the container via COPY
+RUN wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
+
+# Install the newly downloaded CUDA-TOOLKIT
+RUN rpm -i /cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
+RUN zypper --gpg-auto-import-keys refresh
+RUN zypper -n install -y cuda
 
 # Execute the two servers (TensorBoard and JupyterLab)
 ENTRYPOINT ["/start.sh"]
