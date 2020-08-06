@@ -14,8 +14,10 @@ RUN pip install httplib2==0.12.0 \
 	absl-py==0.8 \
 	setuptools==41.0.0 \
 	pandas==0.24 \
-	tensorflow==2.2.0 \
-	tfx==0.21.2
+	tensorflow-serving-api==2.1.0 \
+	tensorflow==2.1.0 \
+	tfx==0.21.2 \
+	--use-feature=2020-resolver
 
 # TensorBoard
 EXPOSE 6006 
