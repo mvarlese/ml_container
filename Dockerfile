@@ -14,7 +14,7 @@ RUN pip install httplib2==0.12.0 \
 	absl-py==0.8 \
 	setuptools==41.0.0 \
 	pandas==0.24 \
-	tensorflow==2.1 \
+	tensorflow==2.2.0 \
 	tfx==0.21.2
 
 # TensorBoard
