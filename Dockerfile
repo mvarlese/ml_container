@@ -1,4 +1,4 @@
-FROM opensuse/leap:15.2 AS base
+FROM registry.suse.com/suse/sle15:latest AS base
 
 RUN zypper -n install -y python3-pip \
 	wget
