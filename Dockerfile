@@ -40,7 +40,7 @@ RUN wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_insta
 # Install the newly downloaded CUDA-TOOLKIT
 RUN rpm -i /cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
 RUN zypper --gpg-auto-import-keys refresh
-RUN zypper -n install -y cuda-libraries-11-5
+RUN zypper -n install -y cuda-libraries-11-5 cuda-toolkit-11-5
 
 # Execute the two servers (TensorBoard and JupyterLab)
 ENTRYPOINT ["/start.sh"]
