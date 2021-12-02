@@ -35,7 +35,8 @@ RUN chmod +x /start.sh
 FROM base AS gpu
 
 RUN zypper ar https://nvidia.github.io/libnvidia-container/sles15.1/libnvidia-container.repo
-RUN zypper ar https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/cuda-sles15.repo
+
+#RUN zypper ar https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/cuda-sles15.repo
 
 # Install the newly downloaded CUDA-TOOLKIT
 RUN zypper --gpg-auto-import-keys refresh
