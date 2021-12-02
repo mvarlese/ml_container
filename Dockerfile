@@ -39,10 +39,7 @@ RUN zypper ar https://developer.download.nvidia.com/compute/cuda/repos/sles15/x8
 
 # Install the newly downloaded CUDA-TOOLKIT
 RUN zypper --gpg-auto-import-keys refresh
-RUN zypper -n install -y cuda-libraries-11-5 \
-        cuda-toolkit-11-5 \
-        libnvidia-container1 \
-        libnvidia-container-tools
+RUN zypper -n install -y libnvidia-container1 libnvidia-container-tools
 
 # Execute the two servers (TensorBoard and JupyterLab)
 ENTRYPOINT ["/start.sh"]
