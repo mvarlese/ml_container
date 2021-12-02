@@ -35,7 +35,7 @@ RUN chmod +x /start.sh
 FROM base AS gpu
 
 # This could be downloaded locally and copied to the container via COPY
-RUN wget RUN zypper ar https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/cuda-sles15.repo
+RUN zypper ar https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/cuda-sles15.repo
 
 # Install the newly downloaded CUDA-TOOLKIT
 RUN rpm -i /cuda-repo-opensuse15-10-2-local-10.2.89-440.33.01-1.0-1.x86_64.rpm
