@@ -1,0 +1,9 @@
+FROM registry.suse.com/suse/sle15:latest AS base
+
+RUN zypper ar https://nvidia.github.io/libnvidia-container/sles15.1/libnvidia-container.repo
+RUN zypper ar https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/cuda-sles15.repo
+
+RUN zypper --gpg-auto-import-keys refresh
+
+RUN zypper -n install -y libnvidia-container1 \
+	libnvidia-container-tools
